@@ -10,6 +10,7 @@ OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
 client = openai.OpenAI(api_key=OPENAI_API_KEY)
 
 def download_file(url, filename):
+    """Download een bestand als het nog niet bestaat."""
     if not os.path.exists(filename):
         print(f"📥 Downloading {filename}...")
         response = requests.get(url, stream=True)
@@ -18,8 +19,9 @@ def download_file(url, filename):
                 f.write(chunk)
         print(f"✅ {filename} downloaded!")
 
-download_file("https://drive.google.com/file/d/1T5Y0Hd5YHRHWzKd3jncFt5A147wX-6Dr/view?usp=drive_link/osrs_index.bin", "osrs_index.bin")
-download_file("https://drive.google.com/file/d/1Qbb-Q-ZpwGNOvC7cI3_nouuOLNg1gJ5L/view?usp=drive_link/osrs_articles.npy", "osrs_articles.npy")
+# 🔥 Download alleen osrs_index.bin als het niet aanwezig is
+BIN_URL = "https://github.com/Merrie11/WiseOldBot/blob/main/Backup/osrs_index.bin"
+download_file(BIN_URL, "osrs_index.bin")
 
 index = faiss.read_index("osrs_index.bin")
 articles = np.load("osrs_articles.npy", allow_pickle=True)
