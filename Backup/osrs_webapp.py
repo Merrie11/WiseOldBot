@@ -18,8 +18,8 @@ def download_file(url, filename):
                 f.write(chunk)
         print(f"✅ {filename} downloaded!")
 
-download_file("https://drive.google.com/file/d/1T5Y0Hd5YHRHWzKd3jncFt5A147wX-6Dr/view?usp=drive_link", "osrs_index.bin")
-download_file("https://drive.google.com/file/d/1Qbb-Q-ZpwGNOvC7cI3_nouuOLNg1gJ5L/view?usp=drive_link", "osrs_articles.npy")
+download_file("https://drive.google.com/file/d/1T5Y0Hd5YHRHWzKd3jncFt5A147wX-6Dr/view?usp=drive_link/osrs_index.bin", "osrs_index.bin")
+download_file("https://drive.google.com/file/d/1Qbb-Q-ZpwGNOvC7cI3_nouuOLNg1gJ5L/view?usp=drive_link/osrs_articles.npy", "osrs_articles.npy")
 
 index = faiss.read_index("osrs_index.bin")
 articles = np.load("osrs_articles.npy", allow_pickle=True)
