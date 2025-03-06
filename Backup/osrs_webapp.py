@@ -1,12 +1,25 @@
+import os
 import streamlit as st
 import openai
 import faiss
+import requests
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
 OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
-
 client = openai.OpenAI(api_key=OPENAI_API_KEY)
+
+def download_file(url, filename):
+    if not os.path.exists(filename):
+        print(f"📥 Downloading {filename}...")
+        response = requests.get(url, stream=True)
+        with open(filename, "wb") as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                f.write(chunk)
+        print(f"✅ {filename} downloaded!")
+
+download_file("https://drive.google.com/file/d/1T5Y0Hd5YHRHWzKd3jncFt5A147wX-6Dr/view?usp=drive_link", "osrs_index.bin")
+download_file("https://drive.google.com/file/d/1Qbb-Q-ZpwGNOvC7cI3_nouuOLNg1gJ5L/view?usp=drive_link", "osrs_articles.npy")
 
 index = faiss.read_index("osrs_index.bin")
 articles = np.load("osrs_articles.npy", allow_pickle=True)
